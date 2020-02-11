@@ -228,7 +228,8 @@ svg {
 }
 
 .grid-item4 {
-  border-right: none;
+  border-bottom-right-radius: 10px;
+  grid-column: 3/5;
 }
 
 
@@ -240,9 +241,27 @@ svg {
 .grid-bottom-left {
   border-bottom-left-radius: 10px;
   border-right: none;
-  
 }
 
+.search-button {
+  float: right;
+  height: 57px;
+  width: 171px;
+  background: none;
+  border: none;
+  border-left: 1px solid var(--font-color);
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: rgba(90, 90, 90, 0.51);;
+  border-left: 1px solid var(--font-color);
+  border-bottom-right-radius: 10px;
+}
+
+iframe {
+  padding-top: 150px;
+}
 
 #description{
     margin: 0 auto;
@@ -266,7 +285,6 @@ svg {
     font-family: 'VT323', monospace;
     font-size: 30px;
     padding: 10px;
-    float: right;
 }
 
 img[src="assets/mag-glass.png"] {
