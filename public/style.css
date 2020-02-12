@@ -273,6 +273,7 @@ iframe {
 #apod{
     margin-top: 25px;
     overflow-y: scroll;
+    max-height: 633px;
     height: 90%;
     width: 90%;
     border: 1px solid var(--font-color);

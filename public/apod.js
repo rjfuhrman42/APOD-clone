@@ -6,8 +6,8 @@ const search = document.querySelector('#search-date')
 const button = document.querySelector('.search-button')
 const form = document.querySelector('.search')
 
-const today = new Date(Date.now());
-console.log(today.getUTCFullYear());
+var today = new Date(Date.now());
+console.log(today.toLocaleDateString());
 
 callBackendAPI = async (api_url) => {
     // const api_url = `/apod`
@@ -36,6 +36,16 @@ form.addEventListener('submit', (event) => {
   event.preventDefault()
 
   const theDate = search.value;
+  const givenDate = Date.parse(theDate)
+  const maxDate = Date.now()                  // APODs only exist after June 16th, 1995 
+  const minDate = Date.parse('1995-06-16')
+
+  if(givenDate < minDate || givenDate > maxDate) 
+  {
+    alert(`Date must be between 06/16/1995 and ${today.toLocaleDateString()}.`) 
+    return;
+  }
+
   callBackendAPI(`/search/${theDate}`)
   .then(response => {
     media.innerHTML = response.media_type === 'image' ? 
