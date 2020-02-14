@@ -8,11 +8,14 @@ const forwardButton = document.querySelector('#button-forward-one-day');
 const backButton = document.querySelector('#button-back-one-day');
 const form = document.querySelector('.search');
 
-var today = new Date(Date.now());
-console.log(today.toLocaleDateString());
+
+const maxDate = Date.now();                      
+const minDate = Date.parse('1995-06-16');
+const today = new Date(maxDate);
+
 
 callBackendAPI = async (api_url) => {
-    // const api_url = `/apod`
+
     console.log(api_url)
     const response = await fetch(api_url);
     const body = await response.json();
@@ -26,9 +29,8 @@ callBackendAPI('/apod')
 .then(response => createMedia(response))
 
 const searchDate = (event) => {
+
   event.preventDefault();
-  const maxDate = Date.now();                      
-  const minDate = Date.parse('1995-06-16');
 
   if(event.target === form)                                                  // if the function was called from the search form
   {                                                                          // find the specific date
@@ -45,23 +47,9 @@ const searchDate = (event) => {
     .then(response => createMedia(response))
 
   }
-  else if(event.target === forwardButton)
-  {
-    let x = new Date(Date.parse(date.innerText))
-    x.setDate(x.getUTCDate() + 1)
-
-    let day = x.getDate() < 10 ? `0${x.getDate()}` : `${x.getDate()}`                           // we need to reformat the date so the API_url is correct, also need to add 0 to days/months less than october
-    let month = x.getUTCMonth() + 1 < 10 ? `0${x.getUTCMonth() + 1}` : `${x.getUTCMonth() + 1}` // we need to add 1 to the month because it starts at 0 (read from stackoverflow...)
-    let dateString = `${x.getUTCFullYear()}-${month}-${day}`
-
-    callBackendAPI(`/search/${dateString}`)
-    .then(response => createMedia(response))
-  }
-  else {
-    cur.setDate(cur.getDate() - 1)
-    console.log(cur)
-  }
+  else changeByOne(event.target)
 }
+
 
 const createMedia = (response) => {
     media.innerHTML = response.media_type === 'image' ? 
@@ -72,6 +60,27 @@ const createMedia = (response) => {
     date.innerText = response.date;
     description.innerText = response.explanation;
 }
+
+const changeByOne = (target) => {
+
+    let x = new Date(Date.parse(date.innerText))
+    console.log(target)
+    if(target === forwardButton) x.setDate(x.getUTCDate() + 1)
+    else x.setDate(x.getUTCDate() - 1)
+
+    let day = x.getDate() < 10 ? `0${x.getDate()}` : `${x.getDate()}`                           // we need to reformat the date so the API_url is correct, also need to add 0 to days/months less than october
+    let month = x.getUTCMonth() + 1 < 10 ? `0${x.getUTCMonth() + 1}` : `${x.getUTCMonth() + 1}` // we need to subtract 1 from the month because it starts at 0 (read from stackoverflow...)
+    let dateString = `${x.getUTCFullYear()}-${month}-${day}`
+
+    if(Date.parse(dateString) < minDate || Date.parse(dateString) > maxDate)                                 // The date passed MUST be between June 16th, 1995 and todays date
+    {
+      alert(`Date must be between 06/16/1995 and ${today.toLocaleDateString()}.`) 
+      return;
+    }
+
+    callBackendAPI(`/search/${dateString}`)
+    .then(response => createMedia(response))
+  }
 
 form.addEventListener('submit', searchDate);
 forwardButton.addEventListener('click', searchDate);

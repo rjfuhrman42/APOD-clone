@@ -255,7 +255,7 @@ svg {
 }
 
 .search-button:hover {
-  background-color: rgba(90, 90, 90, 0.51);;
+  background-color: rgba(90, 90, 90, 0.51);
   border-left: 1px solid var(--font-color);
   border-bottom-right-radius: 20px;
 }
@@ -272,9 +272,9 @@ iframe {
 }
 
 #apod{
-    margin-top: 25px;
+    margin-top: 30px;
     overflow-y: scroll;
-    max-height: 633px;
+    max-height: 610px;
     height: 90%;
     width: 90%;
     border: 1px solid var(--font-color);
@@ -289,20 +289,40 @@ iframe {
     padding: 10px;
 }
 
+#button-back-one-day, #button-forward-one-day {
+    width: 200px; 
+    height: 100%;
+    padding: 18px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#button-back-one-day:hover, #button-forward-one-day:hover {
+  width: 200px; 
+  height: 100%;
+  padding: 18px 20px;
+  background: rgba(90, 90, 90, 0.51);
+}
+
+#button-back-one-day:hover {
+  border-bottom-left-radius: 20px;
+}
+
 #button-back-one-day {
     float: left; 
-    width: 20px; 
-    padding: 18px 20px;
 }
 
 #button-forward-one-day {
-  float: right; 
-  width: 20px; 
-  padding: 18px 20px;
+    float: right; 
 }
 
 
-img[src="assets/mag-glass.png"] {
+img[src="assets/arrow-right.png"], img[src="assets/arrow-left.png"] {
+    margin-top: 3px;
+}
+
+img[src="assets/mag-glass.png"]{
     height: 30px;
     width: 30px;
     padding: 13px;
