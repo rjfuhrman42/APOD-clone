@@ -289,6 +289,19 @@ iframe {
     padding: 10px;
 }
 
+#button-back-one-day {
+    float: left; 
+    width: 20px; 
+    padding: 18px 20px;
+}
+
+#button-forward-one-day {
+  float: right; 
+  width: 20px; 
+  padding: 18px 20px;
+}
+
+
 img[src="assets/mag-glass.png"] {
     height: 30px;
     width: 30px;

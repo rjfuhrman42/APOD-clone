@@ -11,18 +11,18 @@ app.use(express.static('public'));
 app.get('/apod', async (request, response) => {
     const api_key = process.env.API_KEY;
     const api_url = `https://api.nasa.gov/planetary/apod?api_key=${api_key}`
-    console.log(api_url)
+    //console.log(api_url)
     const data = await fetch(api_url);
     const json = await data.json();
-    console.log(json);
+   // console.log(json);
     response.json(json);
 })
 
 app.get('/search/:date', async (request, response) => {
     const {date} = request.params
+    console.log(date)
     const api_key = process.env.API_KEY;
     const api_url = `https://api.nasa.gov/planetary/apod?api_key=${api_key}&date=${date}`
-    console.log(api_url)
     const data = await fetch(api_url);
     const json = await data.json();
     console.log(json);

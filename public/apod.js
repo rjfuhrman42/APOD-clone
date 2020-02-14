@@ -1,16 +1,19 @@
 const media = document.querySelector('.grid-image');
 const title = document.querySelector('#title');
-const description = document.querySelector('.grid-description');
 const date = document.querySelector('#date');
-const search = document.querySelector('#search-date')
-const button = document.querySelector('.search-button')
-const form = document.querySelector('.search')
+const description = document.querySelector('.grid-description');
+const search = document.querySelector('#search-date');
+const button = document.querySelector('.search-button');
+const forwardButton = document.querySelector('#button-forward-one-day');
+const backButton = document.querySelector('#button-back-one-day');
+const form = document.querySelector('.search');
 
 var today = new Date(Date.now());
 console.log(today.toLocaleDateString());
 
 callBackendAPI = async (api_url) => {
     // const api_url = `/apod`
+    console.log(api_url)
     const response = await fetch(api_url);
     const body = await response.json();
     if (response.status !== 200) {
@@ -20,40 +23,56 @@ callBackendAPI = async (api_url) => {
   };
 
 callBackendAPI('/apod')
-.then(response => {
+.then(response => createMedia(response))
+
+const searchDate = (event) => {
+  event.preventDefault();
+  const maxDate = Date.now();                      
+  const minDate = Date.parse('1995-06-16');
+
+  if(event.target === form)                                                  // if the function was called from the search form
+  {                                                                          // find the specific date
+    const theDate = search.value;
+    const givenDate = Date.parse(theDate)
   
-    media.innerHTML = response.media_type === 'image' ? 
-    `<img id="apod" src=${response.url}>` 
-    : 
-    `<iframe width="560" height="315" src=${response.url}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`
-    title.innerText = response.title;
-    date.innerText = response.date;
-    description.innerText = response.explanation;
-})
+    if(givenDate < minDate || givenDate > maxDate)                                             // The date passed MUST be between June 16th, 1995 and todays date
+    {
+      alert(`Date must be between 06/16/1995 and ${today.toLocaleDateString()}.`) 
+      return;
+    }
 
+    callBackendAPI(`/search/${theDate}`)
+    .then(response => createMedia(response))
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault()
-
-  const theDate = search.value;
-  const givenDate = Date.parse(theDate)
-  const maxDate = Date.now()                  // APODs only exist after June 16th, 1995 
-  const minDate = Date.parse('1995-06-16')
-
-  if(givenDate < minDate || givenDate > maxDate) 
-  {
-    alert(`Date must be between 06/16/1995 and ${today.toLocaleDateString()}.`) 
-    return;
   }
+  else if(event.target === forwardButton)
+  {
+    let x = new Date(Date.parse(date.innerText))
+    x.setDate(x.getUTCDate() + 1)
 
-  callBackendAPI(`/search/${theDate}`)
-  .then(response => {
+    let day = x.getDate() < 10 ? `0${x.getDate()}` : `${x.getDate()}`                           // we need to reformat the date so the API_url is correct, also need to add 0 to days/months less than october
+    let month = x.getUTCMonth() + 1 < 10 ? `0${x.getUTCMonth() + 1}` : `${x.getUTCMonth() + 1}` // we need to add 1 to the month because it starts at 0 (read from stackoverflow...)
+    let dateString = `${x.getUTCFullYear()}-${month}-${day}`
+
+    callBackendAPI(`/search/${dateString}`)
+    .then(response => createMedia(response))
+  }
+  else {
+    cur.setDate(cur.getDate() - 1)
+    console.log(cur)
+  }
+}
+
+const createMedia = (response) => {
     media.innerHTML = response.media_type === 'image' ? 
-    `<img id="apod" src=${response.url}>` 
+    `<img id="apod" src=${response.url}>`                                        
     : 
     `<iframe width="560" height="315" src=${response.url}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`
     title.innerText = response.title;
     date.innerText = response.date;
     description.innerText = response.explanation;
-  })
-})
+}
+
+form.addEventListener('submit', searchDate);
+forwardButton.addEventListener('click', searchDate);
+backButton.addEventListener('click', searchDate);
