@@ -64,7 +64,7 @@ const createMedia = (response) => {
 const changeByOne = (target) => {
 
     let x = new Date(Date.parse(date.innerText))
-    console.log(target)
+    
     if(target === forwardButton) x.setDate(x.getUTCDate() + 1)
     else if(target === backButton) x.setDate(x.getUTCDate() - 1)
 
@@ -72,7 +72,7 @@ const changeByOne = (target) => {
     let month = x.getUTCMonth() + 1 < 10 ? `0${x.getUTCMonth() + 1}` : `${x.getUTCMonth() + 1}` // we need to subtract 1 from the month because it starts at 0 (read from stackoverflow...)
     let dateString = `${x.getUTCFullYear()}-${month}-${day}`
   
-    if(Date.parse(dateString) < minDate || Date.parse(dateString) > maxDate)                                 // The date passed MUST be between June 16th, 1995 and todays date
+    if(Date.parse(dateString) < minDate || Date.parse(dateString) > maxDate)                    // The date passed MUST be between June 16th, 1995 and todays date
     {
       alert(`Date must be between 06/16/1995 and ${today.toLocaleDateString()}.`) 
       return;
