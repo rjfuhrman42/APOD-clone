@@ -341,6 +341,9 @@ h2{
       margin: 0 auto;    
       width: 800px;
   }
+  .grid-title {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 1220px) {          /* wow this is a mess */
@@ -351,11 +354,11 @@ h2{
       .grid-container{
         display: grid;
         grid-template-columns:  60vw 30vw;
-        grid-template-rows:  10vh auto 10vh 10vh auto 10vh;
+        grid-template-rows: 6vh auto 6vh 6vh auto 9vh;
         justify-content: center;
         margin: 0 auto;    
         width: 800px;
-        margin-top: 100vh;
+        margin-top: 75vh;
     }
       .grid-item1 {
         grid-row: 1/2;
@@ -394,6 +397,14 @@ h2{
           grid-row: 6/6;
       }
 
+}
+
+@media only screen and (max-width: 812px) {
+  /* For mobile phones: */
+  .grid-container{
+    margin-top: 0vh;
+    grid-template-rows: 3vh auto 3vh 3vh auto 4vh;
+  }
 }
 
 @media (max-height: 968px) {
