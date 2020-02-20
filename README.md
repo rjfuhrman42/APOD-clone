@@ -1,7 +1,7 @@
 # APOD-clone
 A clone of NASA's Astronomy Picture of the Day
 
-![image](/public/screenshots/preview_gif.gif?raw=true "Preview")
+![image](/public/screenshots/preview.png?raw=true "Preview")
 
 ### To run this app
 
