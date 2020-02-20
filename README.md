@@ -1,5 +1,6 @@
 # APOD-clone
-A clone of NASA's Astronomy Picture of the Day
+A clone of NASA's Astronomy Picture of the Day. 
+Allows you to go back and forth between days, as well as go to a specific date.
 
 ![image](/public/screenshots/preview.png?raw=true "Preview")
 
