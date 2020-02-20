@@ -29,7 +29,6 @@ callBackendAPI('/apod')
 .then(response => createMedia(response))
 
 const searchDate = (event) => {
-
   event.preventDefault();
 
   if(event.target === form)                                                  // if the function was called from the search form
